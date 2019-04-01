@@ -7,25 +7,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TestService {
 
     private final AuthorRepo authorRepo;
+    private final AuthorContactInfoRepo contactInfoRepo ;
 
     @Transactional
     public void doSomething() {
-        final List<Author> authors = authorRepo.findAll()
-                                        .stream()
-                                        .map(author -> {
-                                            author.setSurname("Test Family");
-                                            return author;
-                                        })
-                                        .collect(toList());
 
-        authorRepo.save(authors);
+        final List<Author> authors = authorRepo.findAll();
+        //Business logic...
 
+        System.out.println(authors);
+    }
+
+    @Transactional
+    public void init() {
+        authorRepo.findAll().forEach(author -> {
+            contactInfoRepo.save(new AuthorContactInfo(author, "test@test.com", "+34651877446"));
+        });
     }
 }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = "id")
-@ToString(of = { "id", "street", "number", "reference", "postalcode"})
+@ToString(exclude = "city")
 public class Address {
 
     @Id

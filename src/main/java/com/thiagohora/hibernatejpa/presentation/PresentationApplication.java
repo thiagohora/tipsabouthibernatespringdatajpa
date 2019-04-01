@@ -33,6 +33,7 @@ public class PresentationApplication implements ApplicationContextAware {
 		final ConfigurableApplicationContext context = SpringApplication.run(PresentationApplication.class, args);
 
 		final TestService service = context.getBean(TestService.class);
+		service.init();
 		service.doSomething();
 	}
 
@@ -63,9 +64,11 @@ public class PresentationApplication implements ApplicationContextAware {
 		addressRepo.save(address);
 
 		author1.setAddress(address);
-
-		authorRepo.save(author1);
-		authorRepo.save(author2);
+		author2.setAddress(address);
+		author3.setAddress(address);
+		author4.setAddress(address);
+		author5.setAddress(address);
+		author6.setAddress(address);
 
 		final Publisher publisher1 = new Publisher("Publisher 1", "Test");
 		final Publisher publisher2 = new Publisher("Publisher 2", "Test");
@@ -75,6 +78,8 @@ public class PresentationApplication implements ApplicationContextAware {
 
 		final Book book1 = new Book("Test 1", publisher1, author1);
 		final Book book2 = new Book("Test 2", publisher2, author2);
+
+		authorRepo.save(Arrays.asList(author1, author2, author5, author3, author6, author4));
 
 		bookRepo.save(book1);
 		bookRepo.save(book2);
@@ -88,8 +93,6 @@ public class PresentationApplication implements ApplicationContextAware {
 		final Address address1 = new Address("Test", "10", "ap 11", "11025010", city);
 
 		addressRepo.save(address1);
-
-		authorRepo.save(Arrays.asList(author3, author4, author5, author6));
 
 		System.out.println("-------------------------------------------------------------------");
 	}
